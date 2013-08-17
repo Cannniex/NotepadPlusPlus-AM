@@ -145,6 +145,7 @@ int Scintilla_LinkLexers() {
 	LINK_LEXER(lmOctave);
 	LINK_LEXER(lmOpal);
 	LINK_LEXER(lmPascal);
+	LINK_LEXER(lmPawn);
 	LINK_LEXER(lmPB);
 	LINK_LEXER(lmPerl);
 	LINK_LEXER(lmPHPSCRIPT);
@@ -165,6 +166,7 @@ int Scintilla_LinkLexers() {
 	LINK_LEXER(lmSearchResult);
 	LINK_LEXER(lmSmalltalk);
 	LINK_LEXER(lmSML);
+	LINK_LEXER(lmSourcePawn);
 	LINK_LEXER(lmSorc);
 	LINK_LEXER(lmSpecman);
 	LINK_LEXER(lmSpice);

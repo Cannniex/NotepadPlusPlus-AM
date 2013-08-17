@@ -7,10 +7,10 @@
 // version 2 of the License, or (at your option) any later version.
 //
 // Note that the GPL places important restrictions on "derived works", yet
-// it does not provide a detailed definition of that term.  To avoid      
-// misunderstandings, we consider an application to constitute a          
+// it does not provide a detailed definition of that term.  To avoid
+// misunderstandings, we consider an application to constitute a
 // "derivative work" for the purpose of this license if it does any of the
-// following:                                                             
+// following:
 // 1. Integrates source code from Notepad++.
 // 2. Integrates/includes/aggregates Notepad++ into a proprietary executable
 //    installer, such as those produced by InstallShield.
@@ -125,7 +125,7 @@ Notepad_plus::Notepad_plus(): _mainWindowStatus(0), _pDocTab(NULL), _pEditView(N
 	_pMainSplitter(NULL),
     _recordingMacro(false), _pTrayIco(NULL), _isUDDocked(false), _pFileSwitcherPanel(NULL),
 	_pProjectPanel_1(NULL), _pProjectPanel_2(NULL), _pProjectPanel_3(NULL), _pDocMap(NULL), _pFuncList(NULL),
-	_linkTriggered(true), _isHotspotDblClicked(false), _isFolding(false), 
+	_linkTriggered(true), _isHotspotDblClicked(false), _isFolding(false),
 	_sysMenuEntering(false),
 	_autoCompleteMain(&_mainEditView), _autoCompleteSub(&_subEditView), _smartHighlighter(&_findReplaceDlg),
 	_isFileOpening(false), _rememberThisSession(true), _pAnsiCharPanel(NULL), _pClipboardHistoryPanel(NULL)
@@ -368,8 +368,8 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	_scintillaCtrls4Plugins.init(_pPublicInterface->getHinst(), hwnd);
 	_pluginsManager.init(nppData);
 
-	// Load plugins firstly from "%APPDATA%/Notepad++/plugins" 
-	// if Notepad++ is not in localConf mode. 
+	// Load plugins firstly from "%APPDATA%/Notepad++/plugins"
+	// if Notepad++ is not in localConf mode.
 	// All the dll loaded are marked.
 	bool isLoadFromAppDataAllow = ::SendMessage(_pPublicInterface->getHSelf(), NPPM_GETAPPDATAPLUGINSALLOWED, 0, 0) == TRUE;
 	const TCHAR *appDataNpp = pNppParam->getAppDataNppDir();
@@ -379,7 +379,7 @@ LRESULT Notepad_plus::init(HWND hwnd)
 	// Load plugins from its installation directory.
 	// All loaded dll will be ignored
 	_pluginsManager.loadPlugins();
-	
+
 
     _restoreButton.init(_pPublicInterface->getHinst(), hwnd);
 
@@ -626,8 +626,8 @@ LRESULT Notepad_plus::init(HWND hwnd)
 		default :                        // hide & undocked
 			break;
     }
-    		// UserDefine Dialog
-	
+		// UserDefine Dialog
+
 	checkMenuItem(IDM_LANG_USER_DLG, uddShow);
 	_toolBar.setCheck(IDM_LANG_USER_DLG, uddShow);
 
@@ -1046,13 +1046,12 @@ bool Notepad_plus::matchInList(const TCHAR *fileName, const vector<generic_strin
 
 void Notepad_plus::wsTabConvert(spaceTab whichWay)
 {
-    int tabWidth = _pEditView->execute(SCI_GETTABWIDTH);
+ int tabWidth = _pEditView->execute(SCI_GETTABWIDTH);
     int currentPos = _pEditView->execute(SCI_GETCURRENTPOS);
     int lastLine = _pEditView->lastZeroBasedLineNumber();
     int docLength = int(_pEditView->execute(SCI_GETLENGTH)) + 1;
     if (docLength < 2) 
         return;
-
     int count = 0;
     int column = 0;
     int counter = 0;
@@ -1099,8 +1098,7 @@ void Notepad_plus::wsTabConvert(spaceTab whichWay)
     {
         delete [] source;
         return;
-    }   
-    char * dest = destination;
+    }      char * dest = destination;
 
     switch (whichWay)
     {
@@ -1184,13 +1182,13 @@ void Notepad_plus::wsTabConvert(spaceTab whichWay)
                         else
                             ++counter;
                     }
-                    
+
                     if (nextChar == true)
                     {
                         nextChar = false;
                         continue;
                     }
-                    
+
                     if (source[i] == ' ' && source[i + counter] == '\t') // spaces "absorbed" by a TAB on the right
                     {
                         *dest++ = '\t';
@@ -1203,12 +1201,11 @@ void Notepad_plus::wsTabConvert(spaceTab whichWay)
                         continue;
                     }
                 }
-                
-                if (onlyLeading == true && nonSpaceFound == false)
+
+				if (onlyLeading == true && nonSpaceFound == false)
                     nonSpaceFound = true;
 
-                if (source[i] == '\n' || source[i] == '\r')
-                {
+                if (source[i] == '\n' || source[i] == '\r')                {
                     *dest++ = source[i]; 
                     column = 0;
                     tabStop = tabWidth - 1;
@@ -1223,12 +1220,12 @@ void Notepad_plus::wsTabConvert(spaceTab whichWay)
                 }
                 else
                 {
+counter = 0;                
                     *dest++ = source[i];
                     counter = 0;
                     if ((source[i] & 0xC0) != 0x80)   // UTF_8 support: count only bytes that don't start with 10......
                     {
                         ++column;
-
                         if (column > 0 && column % tabWidth == 0)
                             tabStop += tabWidth;
                     }
@@ -1245,7 +1242,6 @@ void Notepad_plus::wsTabConvert(spaceTab whichWay)
     _pEditView->execute(SCI_BEGINUNDOACTION);    
     _pEditView->execute(SCI_SETTEXT, 0, (LPARAM)destination);
     _pEditView->execute(SCI_GOTOPOS, newCurrentPos);
-
     for (size_t i=0; i<bookmarks.size(); ++i)
         _pEditView->execute(SCI_MARKERADD, bookmarks[i], MARK_BOOKMARK);
 
@@ -1292,7 +1288,7 @@ void Notepad_plus::removeEmptyLine(bool isBlankContained)
 	}
 	env._str4Replace = TEXT("");
     env._searchType = FindRegex;
-	
+
 	_findReplaceDlg.processAll(ProcessReplaceAll, &env, true);
 
 
@@ -2128,7 +2124,7 @@ void Notepad_plus::addHotSpot()
 	unsigned char style_hotspot = 0;
 	unsigned char mask = INDIC1_MASK;
 
-	// INDIC2_MASK == 255 and it represents MSB bit 
+	// INDIC2_MASK == 255 and it represents MSB bit
 	// only LEX_HTML and LEX_POSTSCRIPT use use INDIC2_MASK bit internally
 	// LEX_HTML is using INDIC2_MASK bit even though it has only 127 states, so it is safe to overwrite 8th bit
 	// INDIC2_MASK will be used for LEX_HTML
@@ -2142,7 +2138,7 @@ void Notepad_plus::addHotSpot()
 
 	LangType type = _pEditView->getCurrentBuffer()->getLangType();
 
-	if (type == L_HTML || type == L_PHP || type == L_ASP || type == L_JSP)			
+	if (type == L_HTML || type == L_PHP || type == L_ASP || type == L_JSP)
 		mask = INDIC2_MASK;
 	else if (type == L_PS)
 		mask = 16;
@@ -2489,6 +2485,10 @@ enum LangType Notepad_plus::menuID2LangType(int cmdID)
             return L_POWERSHELL;
         case IDM_LANG_R :
             return L_R;
+        case IDM_LANG_PAWN :
+            return L_PAWN;
+		case IDM_LANG_SOURCEPAWN :
+			return L_SOURCEPAWN;
 
 		case IDM_LANG_USER :
             return L_USER;
@@ -2650,8 +2650,8 @@ size_t Notepad_plus::getCurrentDocCharCount(UniMode u)
 		result -= lines;
 		return ((int)result < 0)?0:result;
 	}
- 	else
- 	{
+	else
+	{
 		// Note that counting is not well defined for invalid UTF-8 characters.
 		// This method is O(filelength) regardless of the number of characters we count (due to SCI_GETCHARACTERPOINTER);
 		// it would not be appropriate for counting characters in a small selection.
@@ -2679,8 +2679,8 @@ size_t Notepad_plus::getCurrentDocCharCount(UniMode u)
 		{
 			result = countUtf8Characters(buf, 0, endpos);
 		}
- 		return result;
- 	}
+		return result;
+	}
 }
 
 
@@ -2981,7 +2981,7 @@ bool Notepad_plus::removeBufferFromView(BufferID id, int whichOne)
 			activateBuffer(tabToClose->getBufferByIndex(toActivate), whichOne);	//then activate. The prevent jumpy tab behaviour
 		}
 	}
-	else 
+	else
 	{
 		tabToClose->deletItemAt((size_t)index);
 	}
@@ -3414,7 +3414,7 @@ bool Notepad_plus::doBlockComment(comment_mode currCommentMode)
 
 	Buffer * buf = _pEditView->getCurrentBuffer();
 	//--FLS: Avoid side-effects (e.g. cursor moves number of comment-characters) when file is read-only.
-	if (buf->isReadOnly()) 
+	if (buf->isReadOnly())
 		return false;
 	if (buf->getLangType() == L_USER)
 	{
@@ -3438,20 +3438,20 @@ bool Notepad_plus::doBlockComment(comment_mode currCommentMode)
 		commentEnd = buf->getCommentEnd();
 	}
 
-	if ((!commentLineSybol) || (!commentLineSybol[0]) || (commentLineSybol == NULL)) 
+	if ((!commentLineSybol) || (!commentLineSybol[0]) || (commentLineSybol == NULL))
 	{
 	//--FLS: BlockToStreamComment: If there is no block-comment symbol, try the stream comment:
-		if (!(!commentStart || !commentStart[0] || commentStart == NULL || !commentEnd || !commentEnd[0] || commentEnd == NULL)) 
+		if (!(!commentStart || !commentStart[0] || commentStart == NULL || !commentEnd || !commentEnd[0] || commentEnd == NULL))
 		{
-			if ((currCommentMode == cm_comment)) 
+			if ((currCommentMode == cm_comment))
 			{
 				return doStreamComment();
 			}
-			else if (currCommentMode == cm_uncomment) 
+			else if (currCommentMode == cm_uncomment)
 			{
 				return undoStreamComment();
 			}
-			else 
+			else
 				return false;
 		}
 		else
@@ -3497,8 +3497,7 @@ bool Notepad_plus::doBlockComment(comment_mode currCommentMode)
         if (linebufStr.length() < 1)
 			continue;
 
-   		if (currCommentMode != cm_comment)
-		{
+   		if (currCommentMode != cm_comment)		{
 			//--FLS: In order to do get case insensitive comparison use strnicmp() instead case-sensitive comparison.
 			//      Case insensitive comparison is needed e.g. for "REM" and "rem" in Batchfiles.
 			//if (linebufStr.substr(0, comment_length - 1) == comment.substr(0, comment_length - 1))
@@ -3544,7 +3543,7 @@ bool Notepad_plus::doBlockComment(comment_mode currCommentMode)
         _pEditView->execute(SCI_SETSEL, selectionStart, selectionEnd);
     }
     _pEditView->execute(SCI_ENDUNDOACTION);
-	
+
 	//--FLS: undoStreamComment: If there were no block-comments to un-comment try uncommenting of stream-comment.
 	if ((currCommentMode == cm_uncomment) && (nUncomments == 0)) {
 		return undoStreamComment();
@@ -3566,9 +3565,9 @@ bool Notepad_plus::doStreamComment()
 
 	Buffer * buf = _pEditView->getCurrentBuffer();
 	//--FLS: Avoid side-effects (e.g. cursor moves number of comment-characters) when file is read-only.
-	if (buf->isReadOnly()) 
+	if (buf->isReadOnly())
 		return false;
-		
+
 	if (buf->getLangType() == L_USER)
 	{
 		UserLangContainer * userLangContainer = NppParameters::getInstance()->getULCFromName(buf->getUserDefineLangName());
@@ -3599,7 +3598,7 @@ bool Notepad_plus::doStreamComment()
 	// 		return false;
 	//--FLS: BlockToStreamComment: If there is no stream-comment symbol, try the block comment:
 	if ((!commentStart) || (!commentStart[0]) || (commentStart == NULL) || (!commentEnd) || (!commentEnd[0]) || (commentEnd == NULL)) {
-		if (!(!commentLineSybol || !commentLineSybol[0] || commentLineSybol == NULL)) 
+		if (!(!commentLineSybol || !commentLineSybol[0] || commentLineSybol == NULL))
 			return doBlockComment(cm_comment);
 		else
 		return false;
@@ -4635,8 +4634,7 @@ void Notepad_plus::loadCommandlineParams(const TCHAR * commandLine, CmdLineParam
 		return;
 	}
 
- 	LangType lt = pCmdParams->_langType;
-	int ln =  pCmdParams->_line2go;
+ 	LangType lt = pCmdParams->_langType;	int ln =  pCmdParams->_line2go;
     int cn = pCmdParams->_column2go;
 
 	bool readOnly = pCmdParams->_isReadOnly;
@@ -5086,7 +5084,7 @@ void Notepad_plus::launchProjectPanel(int cmdID, ProjectPanel ** pProjPanel, int
 		// in this case is DOCKABLE_DEMO_INDEX
 		// In the case of Notepad++ internal function, it'll be the command ID which triggers this dialog
 		data.dlgID = cmdID;
-		
+
 		NativeLangSpeaker *pNativeSpeaker = (NppParameters::getInstance())->getNativeLangSpeaker();
 		generic_string title_temp = pNativeSpeaker->getProjectPanelLangStr("PanelTitle", PM_PROJECTPANELTITLE);
 
@@ -5113,7 +5111,7 @@ void Notepad_plus::launchDocMap()
 	{
 		_pDocMap = new DocumentMap();
 		_pDocMap->init(_pPublicInterface->getHinst(), _pPublicInterface->getHSelf(), &_pEditView);
-		
+
 		tTbData	data = {0};
 		_pDocMap->create(&data);
 
@@ -5144,7 +5142,7 @@ void Notepad_plus::launchFunctionList()
 	{
 		_pFuncList = new FunctionListPanel();
 		_pFuncList->init(_pPublicInterface->getHinst(), _pPublicInterface->getHSelf(), &_pEditView);
-		
+
 		tTbData	data = {0};
 		_pFuncList->create(&data);
 
@@ -5371,7 +5369,7 @@ bool isInList(int elem, vector<int> elemList)
 
 DWORD WINAPI Notepad_plus::threadTextPlayer(void *params)
 {
-	// random seed generation needs only one time. 
+	// random seed generation needs only one time.
 	srand((unsigned int)time(NULL));
 
 	HWND hNpp = ((TextPlayerParams *)params)->_nppHandle;
@@ -5388,7 +5386,7 @@ DWORD WINAPI Notepad_plus::threadTextPlayer(void *params)
 	trollerParams._targetBufID = targetBufID;
 	HANDLE mutex = ::CreateMutex(NULL, false, TEXT("nppTextWriter"));
 	trollerParams._mutex = mutex;
-	
+
     // Get the current scintilla
     HWND curScintilla = pCurrentView->getHSelf();
 	const int nbMaxTrolling = 1;
@@ -5425,10 +5423,10 @@ DWORD WINAPI Notepad_plus::threadTextPlayer(void *params)
 
 				::Sleep(1000);
 				WaitForSingleObject(mutex, INFINITE);
-				
+
 				::CloseHandle(hThread);
 				//writeLog(TEXT("c:\\tmp\\log.txt"), "trolling end");
-			}	
+			}
 		}
 
 		char charToShow[2] = {text2display[i], '\0'};
@@ -5444,7 +5442,7 @@ DWORD WINAPI Notepad_plus::threadTextPlayer(void *params)
 
         ::SendMessage(curScintilla, SCI_APPENDTEXT, 1, (LPARAM)charToShow);
 		::SendMessage(curScintilla, SCI_GOTOPOS, ::SendMessage(curScintilla, SCI_GETLENGTH, 0, 0), 0);
-		
+
 		previousChar = text2display[i];
 		//char ch[64];
 		//sprintf(ch, "writting char == %c", text2display[i]);
@@ -5463,7 +5461,7 @@ DWORD WINAPI Notepad_plus::threadTextPlayer(void *params)
 		for (size_t i = 0, len = strlen(quoter); i < len; ++i)
 		{
 			int ranNum = getRandomNumber(maxRange);
-			
+
 			char charToShow[2] = {quoter[i], '\0'};
 
 			Sleep(ranNum + intervalTimeArray[ranNum%nbIntervalTime]);
@@ -5485,7 +5483,7 @@ DWORD WINAPI Notepad_plus::threadTextTroller(void *params)
 {
 	WaitForSingleObject(((TextTrollerParams *)params)->_mutex, INFINITE);
 
-	// random seed generation needs only one time. 
+	// random seed generation needs only one time.
 	srand((unsigned int)time(NULL));
 
 	ScintillaEditView *pCurrentView = ((TextTrollerParams *)params)->_pCurrentView;
@@ -5522,7 +5520,7 @@ DWORD WINAPI Notepad_plus::threadTextTroller(void *params)
 		{
 			if (!deleteBack(pCurrentView, targetBufID))
 				break;
-		}	
+		}
 	}
 	else if (delMethod == 1)
 	{
@@ -5556,7 +5554,7 @@ DWORD WINAPI Notepad_plus::threadTextTroller(void *params)
 		::Sleep(ranNum + pauseTimeArray[ranNum%nbPauseTime]);
 		::SendMessage(pCurrentView->getHSelf(), SCI_DELETEBACK, 0, 0);
 	}
-	
+
 	ReleaseMutex(((TextTrollerParams *)params)->_mutex);
 	return TRUE;
 }
@@ -5593,7 +5591,7 @@ bool Notepad_plus::selectBack(ScintillaEditView *pCurrentView, BufferID targetBu
 	Sleep(ranNum + intervalTimeArray[ranNum%nbIntervalTime]);
 	if (currentBufID != targetBufID)
 		return false;
-	
+
 	::SendMessage(pCurrentView->getHSelf(), SCI_SETSELECTION, currentAnchor, --currentPos);
 	return true;
 }
@@ -5606,7 +5604,7 @@ int Notepad_plus::getQuoteIndexFrom(const char *quoter) const
 	{
 		return -2;
 	}
-	
+
 	if (stricmp(quoter, "random") == 0)
 	{
 		srand((unsigned int)time(NULL));
@@ -5635,7 +5633,7 @@ void Notepad_plus::showAllQuotes() const
 		else
 		{
 			WaitForSingleObject(mutex, INFINITE);
-		
+
 		}
 		ReleaseMutex(mutex);
 		Sleep(1000);
@@ -5677,7 +5675,7 @@ bool Notepad_plus::undoStreamComment()
 
 	Buffer * buf = _pEditView->getCurrentBuffer();
 	//--LS: Avoid side-effects (e.g. cursor moves number of comment-characters) when file is read-only.
-	if (buf->isReadOnly()) 
+	if (buf->isReadOnly())
 		return false;
 	if (buf->getLangType() == L_USER)
 	{
@@ -5729,7 +5727,7 @@ bool Notepad_plus::undoStreamComment()
 		int selectionStartMove, selectionEndMove;
 		int flags;
 
-		//-- Directly use Scintilla-Functions 
+		//-- Directly use Scintilla-Functions
 		//   rather than _findReplaceDlg.processFindNext()which does not return the find-position and is not quiet!
 		flags = SCFIND_WORDSTART;
 		_pEditView->execute(SCI_SETSEARCHFLAGS, flags);
@@ -5751,8 +5749,8 @@ bool Notepad_plus::undoStreamComment()
 		//   or if the selection includes a complete stream-comment!! ----------------
 		bool blnCommentFound = false;
 		//-- First, check if there is a stream-comment around the selectionStart position:
-		if ((blnStartCommentBefore[iSelStart] && blnEndCommentAfter[iSelStart]) 
-			&& (!blnEndCommentBefore[iSelStart] || (posStartCommentBefore[iSelStart] >= posEndCommentBefore[iSelStart])) 
+		if ((blnStartCommentBefore[iSelStart] && blnEndCommentAfter[iSelStart])
+			&& (!blnEndCommentBefore[iSelStart] || (posStartCommentBefore[iSelStart] >= posEndCommentBefore[iSelStart]))
 			&& (!blnStartCommentAfter[iSelStart] || (posEndCommentAfter[iSelStart] <= posStartCommentAfter[iSelStart]))) {
 				blnCommentFound = true;
 				posStartComment = posStartCommentBefore[iSelStart];
@@ -5771,8 +5769,8 @@ bool Notepad_plus::undoStreamComment()
 			(posStartCommentAfter[iSelEnd] == -1 ? blnStartCommentAfter[iSelEnd] = false : blnStartCommentAfter[iSelEnd] = true);
 			posEndCommentAfter[iSelEnd] = _pEditView->searchInTarget(end_comment.c_str(), end_comment_length, selectionEnd, docLength);
 			(posEndCommentAfter[iSelEnd] == -1 ? blnEndCommentAfter[iSelEnd] = false : blnEndCommentAfter[iSelEnd] = true);
-			if ((blnStartCommentBefore[iSelEnd] && blnEndCommentAfter[iSelEnd]) 
-				&& (!blnEndCommentBefore[iSelEnd] || (posStartCommentBefore[iSelEnd] >= posEndCommentBefore[iSelEnd])) 
+			if ((blnStartCommentBefore[iSelEnd] && blnEndCommentAfter[iSelEnd])
+				&& (!blnEndCommentBefore[iSelEnd] || (posStartCommentBefore[iSelEnd] >= posEndCommentBefore[iSelEnd]))
 				&& (!blnStartCommentAfter[iSelEnd] || (posEndCommentAfter[iSelEnd] <= posStartCommentAfter[iSelEnd]))) {
 					blnCommentFound = true;
 					posStartComment = posStartCommentBefore[iSelEnd];
@@ -5850,4 +5848,3 @@ bool Notepad_plus::undoStreamComment()
 	} while(1); //do as long as stream-comments are within selection
 	//return retVal;
 } //----- undoStreamComment() -------------------------------
-

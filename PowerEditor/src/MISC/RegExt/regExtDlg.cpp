@@ -7,10 +7,10 @@
 // version 2 of the License, or (at your option) any later version.
 //
 // Note that the GPL places important restrictions on "derived works", yet
-// it does not provide a detailed definition of that term.  To avoid      
-// misunderstandings, we consider an application to constitute a          
+// it does not provide a detailed definition of that term.  To avoid
+// misunderstandings, we consider an application to constitute a
 // "derivative work" for the purpose of this license if it does any of the
-// following:                                                             
+// following:
 // 1. Integrates source code from Notepad++.
 // 2. Integrates/includes/aggregates Notepad++ into a proprietary executable
 //    installer, such as those produced by InstallShield.
@@ -34,23 +34,25 @@ const TCHAR *nppName = TEXT("Notepad++_file");
 const TCHAR *nppBackup = TEXT("Notepad++_backup");
 const TCHAR *nppDoc = TEXT("Notepad++ Document");
 
-const int nbSupportedLang = 9;
-const int nbExtMax = 10;
+const int nbSupportedLang = 11;
+const int nbExtMax = 11;
 const int extNameMax = 18;
 
 TCHAR defExtArray[nbSupportedLang][nbExtMax][extNameMax] = {
 	{TEXT("Notepad"),        			TEXT(".txt"), TEXT(".log"), TEXT(".ini")},
 	{TEXT("c, c++, objc"),   	TEXT(".h"), TEXT(".hpp"), TEXT(".hxx"), TEXT(".c"), TEXT(".cpp"), TEXT(".cxx"), TEXT(".cc"), TEXT(".m")},
-	{TEXT("java, c#, pascal"), 		TEXT(".java"), TEXT(".cs"), TEXT(".pas"), TEXT(".inc")},
+	{TEXT("java, c#, pascal"), 		TEXT(".java"), TEXT(".cs"), TEXT(".pas")},
 	{TEXT("web(html) script"),   TEXT(".html"), TEXT(".htm"), TEXT(".php"), TEXT(".phtml"), TEXT(".js"), TEXT(".jsp"), TEXT(".asp"), TEXT(".css"), TEXT(".xml")},
 	{TEXT("public script"),		TEXT(".sh"), TEXT(".bsh"), TEXT(".nsi"), TEXT(".nsh"), TEXT(".lua"), TEXT(".pl"), TEXT(".pm"), TEXT(".py")},
 	{TEXT("property script"),	TEXT(".rc"), TEXT(".as"), TEXT(".mx"), TEXT(".vb"), TEXT(".vbs")},
 	{TEXT("fortran, TeX, SQL"),			TEXT(".f"),  TEXT(".for"), TEXT(".f90"),  TEXT(".f95"), TEXT(".f2k"), TEXT(".tex"), TEXT(".sql")},
+    {TEXT("pawn"),								TEXT(".sma"), TEXT(".inl"), TEXT(".inc")},
+	{TEXT("sourcepawn"),								TEXT(".sp"), TEXT(".inl"), TEXT(".inc")},
 	{TEXT("misc"),								TEXT(".nfo"), TEXT(".mak")},
 	{TEXT("customize")}
 };
 
-void RegExtDlg::doDialog(bool isRTL) 
+void RegExtDlg::doDialog(bool isRTL)
 {
 	if (isRTL)
 	{
@@ -87,7 +89,7 @@ BOOL CALLBACK RegExtDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 
-		case WM_COMMAND : 
+		case WM_COMMAND :
 		{
 			switch (wParam)
 			{
@@ -107,7 +109,7 @@ BOOL CALLBACK RegExtDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam)
 					{
 						::SendDlgItemMessage(_hSelf, IDC_CUSTOMEXT_EDIT, WM_GETTEXT, extNameMax, (LPARAM)ext2Add);
 						int i = ::SendDlgItemMessage(_hSelf, IDC_REGEXT_REGISTEREDEXTS_LIST, LB_FINDSTRINGEXACT, 0, (LPARAM)ext2Add);
-						if (i != LB_ERR) 
+						if (i != LB_ERR)
 							return TRUE;
 						addExt(ext2Add);
 						::SendDlgItemMessage(_hSelf, IDC_CUSTOMEXT_EDIT, WM_SETTEXT, 0, (LPARAM)TEXT(""));
@@ -186,7 +188,7 @@ BOOL CALLBACK RegExtDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam)
 							{
 								::ShowWindow(::GetDlgItem(_hSelf, IDC_REGEXT_LANGEXT_LIST), SW_SHOW);
 								::ShowWindow(::GetDlgItem(_hSelf, IDC_CUSTOMEXT_EDIT), SW_HIDE);
-								
+
 								_isCustomize = false;
 							}
 							int count = ::SendDlgItemMessage(_hSelf, IDC_REGEXT_LANGEXT_LIST, LB_GETCOUNT, 0, 0);
@@ -205,7 +207,7 @@ BOOL CALLBACK RegExtDlg::run_dlgProc(UINT Message, WPARAM wParam, LPARAM lParam)
 						::EnableWindow(::GetDlgItem(_hSelf, IDC_ADDFROMLANGEXT_BUTTON), false);
 					}
 				}
-				
+
 				else if (LOWORD(wParam) == IDC_REGEXT_LANGEXT_LIST)
 				{
 					if (i != LB_ERR)
@@ -265,7 +267,7 @@ void RegExtDlg::addExt(TCHAR *ext)
     HKEY  hKey;
     DWORD dwDisp;
     long  nRet;
-    
+
 	nRet = ::RegCreateKeyEx(HKEY_CLASSES_ROOT,
                 ext,
                 0,
@@ -275,11 +277,11 @@ void RegExtDlg::addExt(TCHAR *ext)
                 NULL,
                 &hKey,
                 &dwDisp);
-    
+
     if (nRet == ERROR_SUCCESS)
     {
 		TCHAR valData[MAX_PATH];
-		int valDataLen = MAX_PATH * sizeof(TCHAR);		
+		int valDataLen = MAX_PATH * sizeof(TCHAR);
 
 		if (dwDisp == REG_OPENED_EXISTING_KEY)
 		{
@@ -394,4 +396,4 @@ void RegExtDlg::writeNppPath()
 		}
 		RegCloseKey(hKey);
 	}
-} 
+}

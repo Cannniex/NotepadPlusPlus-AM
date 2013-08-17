@@ -137,6 +137,7 @@ LEXOBJS=\
 	$(DIR_O)\LexOpal.obj \
 	$(DIR_O)\LexOthers.obj \
 	$(DIR_O)\LexPascal.obj \
+	$(DIR_O)\LexPawn.obj \
 	$(DIR_O)\LexPB.obj \
 	$(DIR_O)\LexPerl.obj \
 	$(DIR_O)\LexPLM.obj \
@@ -153,6 +154,7 @@ LEXOBJS=\
 	$(DIR_O)\LexSearchResult.obj \
 	$(DIR_O)\LexSmalltalk.obj \
 	$(DIR_O)\LexSML.obj \
+    $(DIR_O)\LexSourcePawn.obj \
 	$(DIR_O)\LexSorcus.obj \
 	$(DIR_O)\LexSpecman.obj \
 	$(DIR_O)\LexSpice.obj \
@@ -387,6 +389,8 @@ $(DIR_O)\LexOthers.obj: ..\lexers\LexOthers.cxx $(LEX_HEADERS)
 
 $(DIR_O)\LexPascal.obj: ..\lexers\LexPascal.cxx $(LEX_HEADERS)
 
+$(DIR_O)\LexPawn.obj: ..\lexers\LexPawn.cxx $(LEX_HEADERS)
+
 $(DIR_O)\LexPB.obj: ..\lexers\LexPB.cxx $(LEX_HEADERS)
 
 $(DIR_O)\LexPerl.obj: ..\lexers\LexPerl.cxx $(LEX_HEADERS)
@@ -418,6 +422,8 @@ $(DIR_O)\LexSearchResult.obj: ..\lexers\LexSearchResult.cxx $(LEX_HEADERS)
 $(DIR_O)\LexSmalltalk.obj: ..\lexers\LexSmalltalk.cxx $(LEX_HEADERS)
 
 $(DIR_O)\LexSML.obj: ..\lexers\LexSML.cxx $(LEX_HEADERS)
+
+$(DIR_O)\LexSourcePawn.obj: ..\lexers\LexSourcePawn.cxx $(LEX_HEADERS)
 
 $(DIR_O)\LexSorcus.obj: ..\lexers\LexSorcus.cxx $(LEX_HEADERS)
 

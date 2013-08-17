@@ -7,10 +7,10 @@
 // version 2 of the License, or (at your option) any later version.
 //
 // Note that the GPL places important restrictions on "derived works", yet
-// it does not provide a detailed definition of that term.  To avoid      
-// misunderstandings, we consider an application to constitute a          
+// it does not provide a detailed definition of that term.  To avoid
+// misunderstandings, we consider an application to constitute a
 // "derivative work" for the purpose of this license if it does any of the
-// following:                                                             
+// following:
 // 1. Integrates source code from Notepad++.
 // 2. Integrates/includes/aggregates Notepad++ into a proprietary executable
 //    installer, such as those produced by InstallShield.
@@ -51,7 +51,7 @@ void Notepad_plus::macroPlayback(Macro macro)
 	_pEditView->execute(SCI_ENDUNDOACTION);
 }
 
-void Notepad_plus::command(int id) 
+void Notepad_plus::command(int id)
 {
 	switch (id)
 	{
@@ -207,12 +207,12 @@ void Notepad_plus::command(int id)
 			unsigned char *lpucharCopy = (unsigned char *)GlobalLock(hglbCopy);
 			memcpy(lpucharCopy, pBinText, textLen * sizeof(unsigned char));
 			lpucharCopy[textLen] = 0;    // null character
-			
+
 			GlobalUnlock(hglbCopy);
-	 
+
 			// Place the handle on the clipboard.
 			SetClipboardData(CF_TEXT, hglbCopy);
-			
+
 
 			// Allocate a global memory object for the text length.
 			HGLOBAL hglbLenCopy = GlobalAlloc(GMEM_MOVEABLE, sizeof(unsigned long));
@@ -221,13 +221,13 @@ void Notepad_plus::command(int id)
 				CloseClipboard();
 				return;
 			}
-	 
-			// Lock the handle and copy the text to the buffer. 
-			unsigned long *lpLenCopy = (unsigned long *)GlobalLock(hglbLenCopy); 
+
+			// Lock the handle and copy the text to the buffer.
+			unsigned long *lpLenCopy = (unsigned long *)GlobalLock(hglbLenCopy);
 			*lpLenCopy = textLen;
-			
-			GlobalUnlock(hglbLenCopy); 
-	 
+
+			GlobalUnlock(hglbLenCopy);
+
 			// Place the handle on the clipboard.
 			UINT f = RegisterClipboardFormat(CF_NPPTEXTLEN);
 			SetClipboardData(f, hglbLenCopy);
@@ -248,32 +248,32 @@ void Notepad_plus::command(int id)
 		break;
 
 		case IDM_EDIT_PASTE_BINARY:
-		{			
+		{
 			if (!IsClipboardFormatAvailable(CF_TEXT))
 				return;
 
 			if (!OpenClipboard(NULL))
-				return; 
-	 
-			HGLOBAL hglb = GetClipboardData(CF_TEXT); 
-			if (hglb != NULL) 
-			{ 
-				char *lpchar = (char *)GlobalLock(hglb); 
-				if (lpchar != NULL) 
+				return;
+
+			HGLOBAL hglb = GetClipboardData(CF_TEXT);
+			if (hglb != NULL)
+			{
+				char *lpchar = (char *)GlobalLock(hglb);
+				if (lpchar != NULL)
 				{
 					UINT cf_nppTextLen = RegisterClipboardFormat(CF_NPPTEXTLEN);
 					if (IsClipboardFormatAvailable(cf_nppTextLen))
 					{
-						HGLOBAL hglbLen = GetClipboardData(cf_nppTextLen); 
-						if (hglbLen != NULL) 
-						{ 
-							unsigned long *lpLen = (unsigned long *)GlobalLock(hglbLen); 
-							if (lpLen != NULL) 
+						HGLOBAL hglbLen = GetClipboardData(cf_nppTextLen);
+						if (hglbLen != NULL)
+						{
+							unsigned long *lpLen = (unsigned long *)GlobalLock(hglbLen);
+							if (lpLen != NULL)
 							{
 								_pEditView->execute(SCI_REPLACESEL, 0, (LPARAM)"");
 								_pEditView->execute(SCI_ADDTEXT, *lpLen, (LPARAM)lpchar);
 
-								GlobalUnlock(hglb); 
+								GlobalUnlock(hglb);
 							}
 						}
 					}
@@ -282,7 +282,7 @@ void Notepad_plus::command(int id)
 
 						_pEditView->execute(SCI_REPLACESEL, 0, (LPARAM)lpchar);
 					}
-					GlobalUnlock(hglb); 
+					GlobalUnlock(hglb);
 				}
 			}
 			CloseClipboard();
@@ -295,27 +295,27 @@ void Notepad_plus::command(int id)
 		{
 			UINT f = RegisterClipboardFormat(id==IDM_EDIT_PASTE_AS_HTML?CF_HTML:CF_RTF);
 
-			if (!IsClipboardFormatAvailable(f)) 
+			if (!IsClipboardFormatAvailable(f))
 				return;
-				
+
 			if (!OpenClipboard(NULL))
-				return; 
-	 
-			HGLOBAL hglb = GetClipboardData(f); 
-			if (hglb != NULL) 
-			{ 
-				LPSTR lptstr = (LPSTR)GlobalLock(hglb); 
-				if (lptstr != NULL) 
-				{ 
-					// Call the application-defined ReplaceSelection 
-					// function to insert the text and repaint the 
-					// window. 
+				return;
+
+			HGLOBAL hglb = GetClipboardData(f);
+			if (hglb != NULL)
+			{
+				LPSTR lptstr = (LPSTR)GlobalLock(hglb);
+				if (lptstr != NULL)
+				{
+					// Call the application-defined ReplaceSelection
+					// function to insert the text and repaint the
+					// window.
 					_pEditView->execute(SCI_REPLACESEL, 0, (LPARAM)lptstr);
 
-					GlobalUnlock(hglb); 
+					GlobalUnlock(hglb);
 				}
 			}
-			CloseClipboard(); 
+			CloseClipboard();
 		}
 		break;
 
@@ -471,10 +471,10 @@ void Notepad_plus::command(int id)
 				// STOP !!!
 				_mainEditView.execute(SCI_STOPRECORD);
 				_subEditView.execute(SCI_STOPRECORD);
-				
+
 				_mainEditView.execute(SCI_SETCURSOR, (WPARAM)SC_CURSORNORMAL);
 				_subEditView.execute(SCI_SETCURSOR, (WPARAM)SC_CURSORNORMAL);
-				
+
 				_recordingMacro = false;
 				_runMacroDlg.initMacroList();
 			}
@@ -504,13 +504,13 @@ void Notepad_plus::command(int id)
 			{
 				bool isFirstTime = !_runMacroDlg.isCreated();
 				_runMacroDlg.doDialog(_nativeLangSpeaker.isRTL());
-				
+
 				if (isFirstTime)
 				{
 					_nativeLangSpeaker.changeDlgLang(_runMacroDlg.getHSelf(), "MultiMacro");
 				}
 				break;
-				
+
 			}
 		}
 		break;
@@ -743,7 +743,7 @@ void Notepad_plus::command(int id)
 
 			break;
 		}
-		
+
 		case IDM_SEARCH_GOPREVMARKER1 :
 		case IDM_SEARCH_GOPREVMARKER2 :
 		case IDM_SEARCH_GOPREVMARKER3 :
@@ -849,11 +849,11 @@ void Notepad_plus::command(int id)
 	    case IDM_SEARCH_CLEAR_BOOKMARKS:
 			bookmarkClearAll();
 		    break;
-			
+
         case IDM_LANG_USER_DLG :
         {
 		    bool isUDDlgVisible = false;
-                
+
 		    UserDefineDialog *udd = _pEditView->getUserDefineDlg();
 
 		    if (!udd->isCreated())
@@ -879,7 +879,7 @@ void Notepad_plus::command(int id)
 						_pMainWindow = _pDocTab;
 
 					::SendMessage(_pPublicInterface->getHSelf(), WM_SIZE, 0, 0);
-					
+
 					udd->display(false);
 					_mainWindowStatus &= ~WindowUserActive;
 				}
@@ -896,7 +896,7 @@ void Notepad_plus::command(int id)
                         else
                             pWindow = _pDocTab;
 
-                        _pMainSplitter->create(pWindow, ScintillaEditView::getUserDefineDlg(), 8, RIGHT_FIX, 45); 
+                        _pMainSplitter->create(pWindow, ScintillaEditView::getUserDefineDlg(), 8, RIGHT_FIX, 45);
                     }
 
 					_pMainWindow = _pMainSplitter;
@@ -978,8 +978,8 @@ void Notepad_plus::command(int id)
 
 		case IDM_EDIT_BLOCK_COMMENT:
 			doBlockComment(cm_toggle);
- 			break;
- 
+			break;
+
 		case IDM_EDIT_BLOCK_COMMENT_SET:
 			doBlockComment(cm_comment);
 			break;
@@ -1055,11 +1055,11 @@ void Notepad_plus::command(int id)
 		case IDM_EDIT_CLEARREADONLY:
 		{
 			Buffer * buf = _pEditView->getCurrentBuffer();
-			
-			DWORD dwFileAttribs = ::GetFileAttributes(buf->getFullPathName());
-			dwFileAttribs ^= FILE_ATTRIBUTE_READONLY; 
 
-			::SetFileAttributes(buf->getFullPathName(), dwFileAttribs); 
+			DWORD dwFileAttribs = ::GetFileAttributes(buf->getFullPathName());
+			dwFileAttribs ^= FILE_ATTRIBUTE_READONLY;
+
+			::SetFileAttributes(buf->getFullPathName(), dwFileAttribs);
 			buf->setFileReadOnly(false);
 		}
 		break;
@@ -1111,7 +1111,7 @@ void Notepad_plus::command(int id)
 		{
 			_isFolding = true; // So we can ignore events while folding is taking place
 			bool doCollapse = (id==IDM_VIEW_TOGGLE_FOLDALL)?fold_collapse:fold_uncollapse;
- 			_pEditView->foldAll(doCollapse);
+			_pEditView->foldAll(doCollapse);
 			if (_pDocMap)
 			{
 				_pDocMap->foldAll(doCollapse);
@@ -1129,7 +1129,7 @@ void Notepad_plus::command(int id)
 		case IDM_VIEW_FOLD_7:
 		case IDM_VIEW_FOLD_8:
 			_isFolding = true; // So we can ignore events while folding is taking place
- 			_pEditView->collapse(id - IDM_VIEW_FOLD - 1, fold_collapse);
+			_pEditView->collapse(id - IDM_VIEW_FOLD - 1, fold_collapse);
 			_isFolding = false;
 			break;
 
@@ -1142,7 +1142,7 @@ void Notepad_plus::command(int id)
 		case IDM_VIEW_UNFOLD_7:
 		case IDM_VIEW_UNFOLD_8:
 			_isFolding = true; // So we can ignore events while folding is taking place
- 			_pEditView->collapse(id - IDM_VIEW_UNFOLD - 1, fold_uncollapse);
+			_pEditView->collapse(id - IDM_VIEW_UNFOLD - 1, fold_uncollapse);
 			_isFolding = false;
 			break;
 
@@ -1208,7 +1208,7 @@ void Notepad_plus::command(int id)
 			::SendMessage(_pPublicInterface->getHSelf(), WM_SIZE, 0, 0);
 			break;
 		}
-		
+
 		case IDM_VIEW_REFRESHTABAR :
 		{
 			::SendMessage(_pPublicInterface->getHSelf(), WM_SIZE, 0, 0);
@@ -1254,18 +1254,18 @@ void Notepad_plus::command(int id)
 			TabBarPlus::setDbClk2Close(!TabBarPlus::isDbClk2Close());
 			break;
 		}
-		
+
 		case IDM_VIEW_DRAWTABBAR_VERTICAL :
 		{
 			TabBarPlus::setVertical(!TabBarPlus::isVertical());
 			::SendMessage(_pPublicInterface->getHSelf(), WM_SIZE, 0, 0);
 			break;
 		}
-		
+
 		case IDM_VIEW_DRAWTABBAR_MULTILINE :
 		{
 			TabBarPlus::setMultiLine(!TabBarPlus::isMultiLine());
-			::SendMessage(_pPublicInterface->getHSelf(), WM_SIZE, 0, 0);		
+			::SendMessage(_pPublicInterface->getHSelf(), WM_SIZE, 0, 0);
 			break;
 		}
 
@@ -1397,7 +1397,7 @@ void Notepad_plus::command(int id)
 		case IDM_VIEW_SYNSCROLLV:
 		{
             bool isSynScollV = !_syncInfo._isSynScollV;
-			
+
 			checkMenuItem(IDM_VIEW_SYNSCROLLV, isSynScollV);
 			_toolBar.setCheck(IDM_VIEW_SYNSCROLLV, isSynScollV);
 
@@ -1408,7 +1408,7 @@ void Notepad_plus::command(int id)
 				int subCurrentLine = _subEditView.execute(SCI_GETFIRSTVISIBLELINE);
 				_syncInfo._line = mainCurrentLine - subCurrentLine;
 			}
-			
+
 		}
 		break;
 
@@ -1541,7 +1541,7 @@ void Notepad_plus::command(int id)
 		case IDM_FORMAT_TOMAC :
 		{
 			Buffer * buf = _pEditView->getCurrentBuffer();
-			
+
 			int f = int((id == IDM_FORMAT_TODOS)?SC_EOL_CRLF:(id == IDM_FORMAT_TOUNIX)?SC_EOL_LF:SC_EOL_CR);
 
 			buf->setFormat((formatType)f);
@@ -1550,7 +1550,7 @@ void Notepad_plus::command(int id)
 		}
 
 		case IDM_FORMAT_ANSI :
-		case IDM_FORMAT_UTF_8 :	
+		case IDM_FORMAT_UTF_8 :
 		case IDM_FORMAT_UCS_2BE :
 		case IDM_FORMAT_UCS_2LE :
 		case IDM_FORMAT_AS_UTF_8 :
@@ -1565,7 +1565,7 @@ void Notepad_plus::command(int id)
 					shoulBeDirty = buf->getUnicodeMode() != uni8Bit;
 					um = uniCookie;
 					break;
-				
+
 				case IDM_FORMAT_UTF_8:
 					um = uniUTF8;
 					break;
@@ -1684,7 +1684,7 @@ void Notepad_plus::command(int id)
         case IDM_FORMAT_KOREAN_WIN :
         case IDM_FORMAT_EUC_KR :
         case IDM_FORMAT_TIS_620 :
-        case IDM_FORMAT_MAC_CYRILLIC : 
+        case IDM_FORMAT_MAC_CYRILLIC :
         case IDM_FORMAT_KOI8U_CYRILLIC :
         case IDM_FORMAT_KOI8R_CYRILLIC :
         {
@@ -1725,7 +1725,7 @@ void Notepad_plus::command(int id)
 					TEXT("You should save the current modification.\rAll the saved modifications can not be undone.\r\rContinue?"),
 					TEXT("Lose Undo Ability Waning"),
 					MB_YESNO);
-				
+
                 if (answer == IDYES)
                 {
                     // Do nothing
@@ -1748,7 +1748,7 @@ void Notepad_plus::command(int id)
 		case IDM_FORMAT_CONV2_ANSI:
 		case IDM_FORMAT_CONV2_AS_UTF_8:
 		case IDM_FORMAT_CONV2_UTF_8:
-		case IDM_FORMAT_CONV2_UCS_2BE: 
+		case IDM_FORMAT_CONV2_UCS_2BE:
 		case IDM_FORMAT_CONV2_UCS_2LE:
 		{
 			int idEncoding = -1;
@@ -1769,7 +1769,7 @@ void Notepad_plus::command(int id)
                     {
 					    if (um == uni8Bit)
 						    return;
-						
+
                         // set scintilla to ANSI
 					    idEncoding = IDM_FORMAT_ANSI;
                     }
@@ -1820,7 +1820,7 @@ void Notepad_plus::command(int id)
 					}
 					break;
 				}
-		
+
 				case IDM_FORMAT_CONV2_UCS_2BE:
 				{
                     if (encoding != -1)
@@ -1843,7 +1843,7 @@ void Notepad_plus::command(int id)
 					}
 					break;
 				}
-		
+
 				case IDM_FORMAT_CONV2_UCS_2LE:
 				{
                     if (encoding != -1)
@@ -1879,8 +1879,8 @@ void Notepad_plus::command(int id)
 				LPVOID clipboardData2 = ::GlobalLock(allocClipboardData);
 
 				::memcpy(clipboardData2, clipboardDataPtr, len);
-				::GlobalUnlock(clipboardData);	
-				::GlobalUnlock(allocClipboardData);	
+				::GlobalUnlock(clipboardData);
+				::GlobalUnlock(allocClipboardData);
 				::CloseClipboard();
 
 				_pEditView->saveCurrentPos();
@@ -1891,7 +1891,7 @@ void Notepad_plus::command(int id)
 				_pEditView->execute(SCI_CLEARALL);
 
 				// Change to the proper buffer, save buffer status
-				
+
 				::SendMessage(_pPublicInterface->getHSelf(), WM_COMMAND, idEncoding, 0);
 
 				// Paste the texte, restore buffer status
@@ -1900,7 +1900,7 @@ void Notepad_plus::command(int id)
 
 				// Restore the previous clipboard data
 				::OpenClipboard(_pPublicInterface->getHSelf());
-				::EmptyClipboard(); 
+				::EmptyClipboard();
 				::SetClipboardData(CF_TEXT, clipboardData2);
 				::CloseClipboard();
 
@@ -1956,7 +1956,7 @@ void Notepad_plus::command(int id)
         case (IDM_FORMAT_KOREAN_WIN  + IDM_FORMAT_CONVERT):
         case (IDM_FORMAT_EUC_KR  + IDM_FORMAT_CONVERT):
         case (IDM_FORMAT_TIS_620  + IDM_FORMAT_CONVERT):
-        case (IDM_FORMAT_MAC_CYRILLIC  + IDM_FORMAT_CONVERT): 
+        case (IDM_FORMAT_MAC_CYRILLIC  + IDM_FORMAT_CONVERT):
         case (IDM_FORMAT_KOI8U_CYRILLIC  + IDM_FORMAT_CONVERT):
         case (IDM_FORMAT_KOI8R_CYRILLIC  + IDM_FORMAT_CONVERT):
         {
@@ -2024,7 +2024,7 @@ void Notepad_plus::command(int id)
             for (size_t i = 0, len = copiedFiles.size(); i < len ; ++i)
             {
                 generic_string themeName(themeSwitcher.getThemeFromXmlFileName(copiedFiles[i].c_str()));
-		        if (!themeSwitcher.themeNameExists(themeName.c_str())) 
+		        if (!themeSwitcher.themeNameExists(themeName.c_str()))
 		        {
 			        themeSwitcher.addThemeFromXml(copiedFiles[i].c_str());
                     if (_configStyleDlg.isCreated())
@@ -2052,7 +2052,7 @@ void Notepad_plus::command(int id)
 		{
 			bool isFirstTime = !_preference.isCreated();
 			_preference.doDialog(_nativeLangSpeaker.isRTL());
-			
+
 			if (isFirstTime)
 			{
 				_nativeLangSpeaker.changePrefereceDlgLang(_preference);
@@ -2127,7 +2127,7 @@ void Notepad_plus::command(int id)
 				char author[maxSelLen+1] = "";
 				_pEditView->getSelectedText(author, maxSelLen + 1);
 				int iQuote = getQuoteIndexFrom(author);
-				
+
 				if (iQuote == -1)
 				{
 					doAboutDlg = true;
@@ -2141,7 +2141,7 @@ void Notepad_plus::command(int id)
 				{
 					showQuoteFromIndex(iQuote);
 					return;
-				}	
+				}
 			}
 			if (doAboutDlg)
 			{
@@ -2205,7 +2205,7 @@ void Notepad_plus::command(int id)
 			::ShellExecute(NULL, TEXT("open"), TEXT("http://npp-community.tuxfamily.org/"), NULL, NULL, SW_SHOWNORMAL);
 			break;
 		}
-	
+
 		case IDM_FORUM:
 		{
 			::ShellExecute(NULL, TEXT("open"), TEXT("http://sourceforge.net/forum/?group_id=95717"), NULL, NULL, SW_SHOWNORMAL);
@@ -2226,7 +2226,7 @@ void Notepad_plus::command(int id)
 
 			generic_string updaterFullPath = updaterDir;
 			PathAppend(updaterFullPath, TEXT("gup.exe"));
-			
+
 			generic_string param = TEXT("-verbose -v");
 			param += VERSION_VALUE;
 
@@ -2234,7 +2234,7 @@ void Notepad_plus::command(int id)
 				param = TEXT("-options");
 
 			Process updater(updaterFullPath.c_str(), param.c_str(), updaterDir.c_str());
-			
+
 			updater.run();
 			break;
 		}
@@ -2314,6 +2314,8 @@ void Notepad_plus::command(int id)
         case IDM_LANG_POWERSHELL :
         case IDM_LANG_R :
         case IDM_LANG_JSP :
+        case IDM_LANG_PAWN :
+		case IDM_LANG_SOURCEPAWN :
 		case IDM_LANG_USER :
 		{
             setLanguage(menuID2LangType(id));
@@ -2325,7 +2327,7 @@ void Notepad_plus::command(int id)
         {
 			int nbDoc = viewVisible(MAIN_VIEW)?_mainDocTab.nbItem():0;
 			nbDoc += viewVisible(SUB_VIEW)?_subDocTab.nbItem():0;
-			
+
 			bool doTaskList = ((NppParameters::getInstance())->getNppGUI())._doTaskList;
 			if (nbDoc > 1)
 			{
@@ -2336,7 +2338,7 @@ void Notepad_plus::command(int id)
 					activateNextDoc(direction);
 				}
 				else
-				{		
+				{
 					TaskListDlg tld;
 					HIMAGELIST hImgLst = _docTabIconList.getHandle();
 					tld.init(_pPublicInterface->getHinst(), _pPublicInterface->getHSelf(), hImgLst, direction);
@@ -2379,7 +2381,7 @@ void Notepad_plus::command(int id)
 		{
 			WindowsDlg _windowsDlg;
 			_windowsDlg.init(_pPublicInterface->getHinst(), _pPublicInterface->getHSelf(), _pDocTab);
-			
+
             const TiXmlNodeA *nativeLangA = _nativeLangSpeaker.getNativeLangA();
 			TiXmlNodeA *dlgNode = NULL;
 			if (nativeLangA)
@@ -2417,11 +2419,11 @@ void Notepad_plus::command(int id)
 			if (!buf->isUntitled() || buf->docLength() != 0)
 			{
 				fileNew();
-			}	
+			}
 			command(IDM_EDIT_PASTE);
 		}
 		break;
-		
+
 		case IDM_SYSTRAYPOPUP_OPENFILE:
 		{
 			NppGUI & nppGUI = (NppGUI &)((NppParameters::getInstance())->getNppGUI());
@@ -2461,7 +2463,7 @@ void Notepad_plus::command(int id)
 			{
 				int i = id - ID_MACRO;
 				vector<MacroShortcut> & theMacros = (NppParameters::getInstance())->getMacroList();
-				macroPlayback(theMacros[i].getMacro());				
+				macroPlayback(theMacros[i].getMacro());
 			}
 			else if ((id >= ID_USER_CMD) && (id < ID_USER_CMD_LIMIT))
 			{
@@ -2481,7 +2483,7 @@ void Notepad_plus::command(int id)
 			{
 				_pluginsManager.relayNppMessages(WM_COMMAND, id, 0);
 			}
-/*UNLOAD 
+/*UNLOAD
 			else if ((id >= ID_PLUGINS_REMOVING) && (id < ID_PLUGINS_REMOVING_END))
 			{
 				int i = id - ID_PLUGINS_REMOVING;
@@ -2490,11 +2492,11 @@ void Notepad_plus::command(int id)
 */
 			else if ((id >= IDM_WINDOW_MRU_FIRST) && (id <= IDM_WINDOW_MRU_LIMIT))
 			{
-				activateDoc(id-IDM_WINDOW_MRU_FIRST);				
+				activateDoc(id-IDM_WINDOW_MRU_FIRST);
 			}
 	}
-	
-	if (_recordingMacro) 
+
+	if (_recordingMacro)
 		switch (id)
 		{
 			case IDM_FILE_NEW :

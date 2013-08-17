@@ -53,15 +53,15 @@
                                 1 : simple backup
                                 2 : verbose backup
                       -->
-        <GUIConfig name="Backup" action="0" useCustumDir="no" dir="" />
+        <GUIConfig name="Backup" action="2" useCustumDir="yes" dir="auto.backup" />
         <GUIConfig name="TaskList">yes</GUIConfig>
         <GUIConfig name="SaveOpenFileInSameDir">no</GUIConfig>
         <!--
 			value 0 for the folloing parameters means invisible :
 			leftWidth, topHight, rightWidth, bottomHight
-			
+
 					position value for the PluginDlg:
-						
+
 						0 : left
 						 1 : right
 						2 : top
@@ -73,10 +73,21 @@
         <GUIConfig name="MRU">yes</GUIConfig>
         <GUIConfig name="URL">2</GUIConfig>
         <GUIConfig name="globalOverride" fg="no" bg="no" font="no" fontSize="no" bold="no" italic="no" underline="no" />
-        <GUIConfig name="auto-completion" autoCAction="0" triggerFromNbChar="1" />
+        <GUIConfig name="auto-completion" autoCAction="2" triggerFromNbChar="3" funcParams="yes" />
         <GUIConfig name="multiInst" setting="0" />
         <GUIConfig name="sessionExt"></GUIConfig>
+        <GUIConfig name="SmartHighLight">yes</GUIConfig>
+        <GUIConfig name="TagsMatchHighLight" TagAttrHighLight="yes" HighLightNonHtmlZone="no">yes</GUIConfig>
+        <GUIConfig name="MenuBar">show</GUIConfig>
+        <GUIConfig name="Caret" width="1" blinkRate="250" />
+        <GUIConfig name="ScintillaGlobalSettings" enableMultiSelection="no" />
+        <GUIConfig name="openSaveDir" value="0" defaultDirPath="" />
+        <GUIConfig name="titleBar" short="no" />
+        <GUIConfig name="stylerTheme" path="stylers.xml" />
+        <GUIConfig name="DockingManager" leftWidth="236" rightWidth="290" topHeight="200" bottomHeight="200" />
     </GUIConfigs>
     <!-- The History of opened files list -->
-    <History nbMaxFile="15" />
+    <FindHistory nbMaxFindHistoryPath="10" nbMaxFindHistoryFilter="10" nbMaxFindHistoryFind="10" nbMaxFindHistoryReplace="10" matchWord="no" matchCase="no" wrap="yes" directionDown="yes" fifRecuisive="no" fifInHiddenFolder="no" dlgAlwaysVisible="no" fifFilterFollowsDoc="no" fifFolderFollowsDoc="no" searchMode="0" transparencyMode="1" transparency="150" />
+    <History nbMaxFile="15" inSubMenu="no" customLength="-1" />
+    <ProjectPanels />
 </NotepadPlus>

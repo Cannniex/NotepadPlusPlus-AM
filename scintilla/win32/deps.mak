@@ -340,6 +340,10 @@ LexPascal.o: ../lexers/LexPascal.cxx ../include/ILexer.h \
  ../lexlib/WordList.h ../lexlib/LexAccessor.h ../lexlib/Accessor.h \
  ../lexlib/StyleContext.h ../lexlib/CharacterSet.h \
  ../lexlib/LexerModule.h
+LexPawn.o: ../lexers/LexPawn.cxx ../include/ILexer.h ../include/Scintilla.h \
+ ../include/SciLexer.h ../lexlib/PropSetSimple.h ../lexlib/WordList.h \
+ ../lexlib/LexAccessor.h ../lexlib/Accessor.h ../lexlib/StyleContext.h \
+ ../lexlib/CharacterSet.h ../lexlib/LexerModule.h
 LexPB.o: ../lexers/LexPB.cxx ../include/ILexer.h ../include/Scintilla.h \
  ../include/SciLexer.h ../lexlib/PropSetSimple.h ../lexlib/WordList.h \
  ../lexlib/LexAccessor.h ../lexlib/Accessor.h ../lexlib/StyleContext.h \
@@ -406,6 +410,10 @@ LexSmalltalk.o: ../lexers/LexSmalltalk.cxx ../include/ILexer.h \
  ../lexlib/StyleContext.h ../lexlib/CharacterSet.h \
  ../lexlib/LexerModule.h
 LexSML.o: ../lexers/LexSML.cxx ../include/ILexer.h ../include/Scintilla.h \
+ ../include/SciLexer.h ../lexlib/PropSetSimple.h ../lexlib/WordList.h \
+ ../lexlib/LexAccessor.h ../lexlib/Accessor.h ../lexlib/StyleContext.h \
+ ../lexlib/CharacterSet.h ../lexlib/LexerModule.h
+LexSourcePawn.o: ../lexers/LexSource    .cxx ../include/ILexer.h ../include/Scintilla.h \
  ../include/SciLexer.h ../lexlib/PropSetSimple.h ../lexlib/WordList.h \
  ../lexlib/LexAccessor.h ../lexlib/Accessor.h ../lexlib/StyleContext.h \
  ../lexlib/CharacterSet.h ../lexlib/LexerModule.h

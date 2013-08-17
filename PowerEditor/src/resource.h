@@ -7,10 +7,10 @@
 // version 2 of the License, or (at your option) any later version.
 //
 // Note that the GPL places important restrictions on "derived works", yet
-// it does not provide a detailed definition of that term.  To avoid      
-// misunderstandings, we consider an application to constitute a          
+// it does not provide a detailed definition of that term.  To avoid
+// misunderstandings, we consider an application to constitute a
 // "derivative work" for the purpose of this license if it does any of the
-// following:                                                             
+// following:
 // 1. Integrates source code from Notepad++.
 // 2. Integrates/includes/aggregates Notepad++ into a proprietary executable
 //    installer, such as those produced by InstallShield.
@@ -29,13 +29,11 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
-#define NOTEPAD_PLUS_VERSION TEXT("Notepad++ v6.4.5")
-
+#define NOTEPAD_PLUS_VERSION TEXT("Notepad++ v6.4.5 [AlliedModders Ed.]")
 // should be X.Y : ie. if VERSION_DIGITALVALUE == 4, 7, 1, 0 , then X = 4, Y = 71 
 // ex : #define VERSION_VALUE TEXT("5.63\0")
 #define VERSION_VALUE TEXT("6.45\0")
 #define VERSION_DIGITALVALUE 6, 4, 5, 0
-
 #ifdef UNICODE
 #define UNICODE_ANSI_MODE TEXT("(UNICODE)")
 #else
@@ -56,12 +54,12 @@
 #define	IDI_CLOSEALL_OFF_ICON 204
 #define	IDI_SAVE_OFF_ICON     205
 #define	IDI_SAVEALL_OFF_ICON  206
-#define	IDI_CUT_OFF_ICON      207   
-#define	IDI_COPY_OFF_ICON     208   
-#define	IDI_PASTE_OFF_ICON    209   
+#define	IDI_CUT_OFF_ICON      207
+#define	IDI_COPY_OFF_ICON     208
+#define	IDI_PASTE_OFF_ICON    209
 #define	IDI_UNDO_OFF_ICON     210
-#define	IDI_REDO_OFF_ICON     211   
-#define	IDI_FIND_OFF_ICON     212   
+#define	IDI_REDO_OFF_ICON     211
+#define	IDI_FIND_OFF_ICON     212
 #define	IDI_REPLACE_OFF_ICON  213
 #define	IDI_ZOOMIN_OFF_ICON   214
 #define	IDI_ZOOMOUT_OFF_ICON  215
@@ -113,7 +111,7 @@
 
 //#define	IDI_NEW_DISABLE_ICON  401
 //#define	IDI_OPEN_ON_ICON      402
-#define	IDI_SAVE_DISABLE_ICON   403  
+#define	IDI_SAVE_DISABLE_ICON   403
 #define	IDI_SAVEALL_DISABLE_ICON 404
 //#define	IDI_CLOSE_ON_ICON       405
 //#define	IDI_CLOSEALL_ON_ICON    406
@@ -203,7 +201,7 @@
 #define ID_PLUGINS_CMD_LIMIT 22500
 
 #define ID_PLUGINS_CMD_DYNAMIC       23000
-#define ID_PLUGINS_CMD_DYNAMIC_LIMIT 24999 
+#define ID_PLUGINS_CMD_DYNAMIC_LIMIT 24999
 
 #define MARKER_PLUGINS          3
 #define MARKER_PLUGINS_LIMIT   19
@@ -218,7 +216,7 @@
 #define IDCMD 50000
 	//#define	IDM_EDIT_AUTOCOMPLETE    			(IDCMD+0)
 	//#define	IDM_EDIT_AUTOCOMPLETE_CURRENTFILE	(IDCMD+1)
-	
+
 	#define	IDC_PREV_DOC					(IDCMD+3)
 	#define	IDC_NEXT_DOC					(IDCMD+4)
 	#define	IDC_EDIT_TOGGLEMACRORECORDING	(IDCMD+5)
@@ -226,10 +224,10 @@
 	//#define	IDC_KEY_END						(IDCMD+7)
 	//#define	IDC_KEY_SELECT_2_HOME			(IDCMD+8)
 	//#define	IDC_KEY_SELECT_2_END			(IDCMD+9)
-	
+
 #define	IDCMD_LIMIT		    			(IDCMD+20)
 
-#define IDSCINTILLA 60000				
+#define IDSCINTILLA 60000
 	#define	IDSCINTILLA_KEY_HOME        (IDSCINTILLA+0)
 	#define	IDSCINTILLA_KEY_HOME_WRAP   (IDSCINTILLA+1)
 	#define	IDSCINTILLA_KEY_END         (IDSCINTILLA+2)
